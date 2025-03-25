@@ -8,12 +8,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class Utils {
+public class DriverUtil {
 
-
+    public static WebDriver driver = null;
 
     public static WebDriver createBrowser(String browser) {
-        WebDriver driver = null;
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("autoGrantPermissions", "true");
 
@@ -21,17 +20,17 @@ public class Utils {
         switch (browser) {
             case "Chrome":
                 //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver2");
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+                WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
 //            	 WebDriverManager.chromedriver().setup();
 //                driver = new ChromeDriver();
                 break;
             case "Firefox":
-                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+                WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
             case "Edge":
-                System.setProperty("webdriver.edge.driver", "src/main/resources/msedgedriver.exe");
+                WebDriverManager.edgedriver().setup();
                 driver = new EdgeDriver();
                 break;
             case "Headless":
