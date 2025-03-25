@@ -2,6 +2,8 @@ Incubyte assignment
 
 -> This project uses BDD (Behavior-Driven Development) to structure test cases and both BDD and POM(Page Object Model) for test scripts.
 
+-> This script is creating new user with random email and password then using same credentials for logging in again
+
 
 -> I have also configured extent report, you can watch report after every execution in Reports folder, In case of failure you can see screenshot where it got failed
 
