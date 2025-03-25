@@ -1,35 +1,31 @@
 package Steps;
 
-import Utils.BaseTest;
+import Utils.DriverUtil;
 import io.cucumber.java.*;
-
 import java.io.IOException;
 
-import static Utils.BaseTest.androidDriver;
-import static Utils.BaseTest.driver;
 import static Utils.DriverUtil.createBrowser;
+import static Utils.DriverUtil.driver;
 
 public class Hook {
-    BaseTest baseTest = new BaseTest();
 
-    @Before("@Func")
+    @Before
     public void testStart() {
         createBrowser("Chrome");
         System.out.println("------Test Started---------");
     }
 
-    @After("@Func")
+    @After
     public void TearDownTest(Scenario scenario) throws IOException {
         String path = null;
 
         if (scenario.isFailed()) {
             System.out.println(scenario.getName());
-            String scFileName = "ScreenShot_" + System.currentTimeMillis();
-            path = System.getProperty("user.dir") + "\\report\\" + scFileName + ".png";
-            byte[] screenshot = baseTest.TakeScreenShot(path);
+            path = System.getProperty("user.dir") + "/Screenshot/" + "embedded1" + ".png";
+            byte[] screenshot = DriverUtil.TakeScreenShot(path);
             scenario.attach(screenshot, "image/png", "image");
-//            driver.close();
-//            driver.quit();
+            driver.close();
+            driver.quit();
         }else{
             driver.close();
             driver.quit();

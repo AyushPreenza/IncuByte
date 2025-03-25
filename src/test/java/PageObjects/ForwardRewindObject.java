@@ -1,67 +1,85 @@
 package PageObjects;
 
-import Utils.BaseTest;
 import Utils.DriverUtil;
-import org.junit.Assert;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ForwardRewindObject extends DriverUtil {
 
-    public By SignInButton=By.xpath("//div[@class='ottplay-84'][text()='Login/Register']");
-    public By UserNameButton=By.xpath("//INPUT[@id='phoneEmail']");
-    public By Continue = By.xpath("//INPUT[@id='btSubmit']");
-    public By PasswordButton=By.xpath("//INPUT[@id='upass']");
-    public By Login = By.xpath("//INPUT[@id='btnLogin']");
-    
-    public void ClickSignIn()
-    {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, 50);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(SignInButton));
-            boolean displayed = driver.findElement(SignInButton).isDisplayed();
-            if(displayed)
-                driver.findElement(SignInButton).click();
-        }catch(Exception e) {
-            refreshPage();
-            driver.findElement(SignInButton).click();
-        }
+    public By createAccount = By.xpath("(//a[contains(text(),'Create an Account')])[1]");
+    public By firstNameField = By.xpath("//input[@id='firstname']");
+    public By lastNameField = By.xpath("//input[@id='lastname']");
+    public By emailField = By.xpath("//input[@id='email_address']");
+    public By passwordField = By.xpath("//input[@id='password']");
+    public By confirmPasswordField = By.xpath("//input[@id='password-confirmation']");
+    public By createAccountConfirm = By.xpath("//button[@title='Create an Account']");
+    public By successMsg = By.xpath("//div[contains(text(),'Thank you')]");
+    public By myAccount = By.xpath("//span[contains(text(),'My Account')]");
+    public By welcome = By.xpath("(//span[contains(text(),'Welcome,')])[1]");
+    public By signIn = By.xpath("(//a[contains(text(),'Sign In')])[1]");
+    public By loginEmail = By.xpath("//input[@name='login[username]']");
+    public By loginPassword = By.xpath("//input[@name='login[password]']");
+    public By signInSubmit = By.xpath("(//button[@id='send2'])[1]");
+    public By dropdown = By.xpath("(//button[@class='action switch'])[1]");
+    public By signOut = By.xpath("(//a[contains(text(),'Sign Out')])[1]");
+
+
+
+    public void createAccountButton(){
+       clickElement(createAccount);
     }
 
-    public void refreshPage(){
-        try {
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            boolean displayed = driver.findElement(SignInButton).isDisplayed();
-            if(!displayed)
-                driver.navigate().refresh();
-        }catch(Exception e) {
-
-        }
+    public void enterFirstName(String firstName){
+        sendKeys(firstNameField,firstName);
     }
 
-    public void enterUserName(String userName){
-        driver.findElement(UserNameButton).sendKeys(userName);
+    public void enterLastName(String lastName){
+        sendKeys(lastNameField,lastName);
     }
 
-    public void clickContinue(){
-        driver.findElement(Continue).click();
+    public void enterEmail(String text){
+        sendKeys(emailField,text);
     }
 
-    public void enterPassword(String password){
-        driver.findElement(PasswordButton).sendKeys(password);
+    public void enterNewPassword(String pass){
+        sendKeys(passwordField,pass);
     }
 
-    public void clickLogin(){
-        driver.findElement(Login).click();
+    public void enterConfirmPassword(String pass){
+        sendKeys(confirmPasswordField,pass);
     }
+
+    public void clickConfirmAccount(){
+        clickElement(createAccountConfirm);
+    }
+
+    public void verifySuccessMsg(){
+        waitForElement(successMsg);
+    }
+
+    public void confirmLogin(){
+        waitForElement(myAccount);
+        waitForElement(welcome);
+    }
+
+    public void clickSignInForLogin(){
+        clickElement(signIn);
+    }
+
+    public void enterEmailLogin(String email1){
+        sendKeys(loginEmail, email1);
+    }
+
+    public void enterPasswordLogin(String pass1){
+        sendKeys(loginPassword, pass1);
+    }
+
+    public void clickSignInSubmit(){
+        clickElement(signInSubmit);
+    }
+
+    public void signOut(){
+        clickElement(dropdown);
+        clickElement(signOut);
+    }
+
 }

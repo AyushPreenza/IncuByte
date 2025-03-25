@@ -1,12 +1,22 @@
 package Utils;
 
+import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class DriverUtil {
 
@@ -71,5 +81,46 @@ public class DriverUtil {
         }
 
         return driver;
+    }
+
+    public static byte[] TakeScreenShot(String path) throws IOException {
+        System.out.println("Screenshot Path: " + path);
+        try {
+            byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
+            fileOutputStream.write(screenshot);
+            fileOutputStream.close();
+            return screenshot;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void waitForElement(By locator){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public void clickElement(By locator){
+        waitForElement(locator);
+         driver.findElement(locator).click();
+    }
+
+    public void sendKeys(By locator,String name){
+        waitForElement(locator);
+        driver.findElement(locator).sendKeys(name);
+    }
+
+    public static String randomEmail(){
+
+        int length = 5;
+        Faker faker = new Faker();
+
+        return faker.name().firstName() + RandomStringUtils.random(length,true, true) + "@gmail.com";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(randomEmail());
     }
 }
