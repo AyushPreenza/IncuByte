@@ -1,12 +1,12 @@
 package Steps;
 
-import PageObjects.ForwardRewindObject;
+import PageObjects.SignUpAndLoginPage;
 import Utils.RandomPasswordGenerator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
-public class ForwardRewind extends ForwardRewindObject {
+public class SignUpAndLoginSteps extends SignUpAndLoginPage {
 
     String firstName = "";
     String lastName =  "";

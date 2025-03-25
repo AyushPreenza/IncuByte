@@ -3,7 +3,7 @@ package PageObjects;
 import Utils.DriverUtil;
 import org.openqa.selenium.*;
 
-public class ForwardRewindObject extends DriverUtil {
+public class SignUpAndLoginPage extends DriverUtil {
 
     public By createAccount = By.xpath("(//a[contains(text(),'Create an Account')])[1]");
     public By firstNameField = By.xpath("//input[@id='firstname']");
